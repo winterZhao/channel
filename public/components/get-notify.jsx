@@ -1,6 +1,7 @@
 
 import React from 'react';
 import axios from 'axios';
+import { userStore } from '../store/index.jsx';
 
 class GetNotify extends React.Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class GetNotify extends React.Component {
             .get(url)
             .then((json)=>{
                 this.setState({'msg': json.data.data})
+                userStore.dispatch({type: 'user', msg: json.data.username})
             })
     }
     render() {

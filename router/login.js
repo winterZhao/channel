@@ -10,7 +10,7 @@ const loginRouter = {
     },
     // 校验登录信息;
     *postLogin() {
-        var result,username,password,
+        var result, username, password,
             obj = {};
 
         try {

@@ -2,6 +2,7 @@
 import React from 'react';
 import axios from 'axios';
 import Search from './search.jsx';
+import qs from 'qs';
 import { Table, Input, Popconfirm } from 'antd';
 
 class EditableCell extends React.Component {
@@ -60,50 +61,56 @@ class EditableTable extends React.Component {
         super(props);
         this.columns = [
             {
-            title: '时间',
-            dataIndex: 'gmt_modified',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'gmt_modified', text),
-        }, {
-            title: '用户名',
-            dataIndex: 'username',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'username', text),
-        }, {
-            title: '搜索名',
-            dataIndex: 'search_name',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'search_name', text),
-        },{
-            title: '数量',
-            dataIndex: 'increase',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'increase', text),
-        }, {
-            title: '金额',
-            dataIndex: 'expense',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'expense', text),
-        }, {
-            title: 'ARPU',
-            dataIndex: 'ARPU',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'ARPU', text),
-        },{
-            title: '数量减量',
-            dataIndex: 'modify_increase',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'modify_increase', text),
-        },{
-            title: '金额减量',
-            dataIndex: 'modify_expense',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'modify_expense', text),
-        },{
-            title: 'ARPU减量',
-            dataIndex: 'modify_ARPU',
-            render: (text, record, index) => this.renderColumns(this.state.data, index, 'modify_ARPU', text),
-        }];
+                title: '用户名',
+                dataIndex: 'username',
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'username', text),
+            }, {
+                title: '搜索名',
+                dataIndex: 'search_name',
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'search_name', text),
+            },{
+                title: '数量',
+                dataIndex: 'increase',
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'increase', text),
+            }, {
+                title: '金额',
+                dataIndex: 'expense',
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'expense', text),
+            }, {
+                title: 'ARPU',
+                dataIndex: 'ARPU',
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'ARPU', text),
+            },{
+                title: '数量减量',
+                dataIndex: 'modify_increase',
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'modify_increase', text),
+            },{
+                title: '金额减量',
+                dataIndex: 'modify_expense',
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'modify_expense', text),
+            },{
+                title: 'ARPU减量',
+                dataIndex: 'modify_ARPU',
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'modify_ARPU', text),
+            }];
         this.state = {
             data: [],
-            pagination: {}
+            pagination: {},
+            expenseSum: null,
+            increaseSum: null,
+            ARPUSum: null
         };
     }
     componentWillMount() {
         var edit = this.props.edit == 'true' ? true : false;
         if ( edit ) {
+            this.columns.unshift({
+                title: '时间',
+                dataIndex: 'crawl_time',
+                render: (text, record, index) => this.renderColumns(this.state.data, index, 'crawl_time', text),
+            })
+
+
             this.columns.push({
                 title: '操作',
                 dataIndex: 'operation',
@@ -114,11 +121,11 @@ class EditableTable extends React.Component {
                             {
                                 editable ?
                                     <span>
-                                    <a onClick={() => this.editDone(index, 'save')}>Save</a>
+                                    <a onClick={() => this.editDone(index, 'save')}>保存</a>
                                 </span>
                                     :
                                     <span>
-                                    <a onClick={() => this.edit(index)}>Edit</a>
+                                    <a onClick={() => this.edit(index)}>编辑</a>
                                 </span>
                             }
                         </div>
@@ -147,8 +154,10 @@ class EditableTable extends React.Component {
 
         axios
             .get( url, {
-                results: 10,
-                ...params
+                params: {
+                    results: 10,
+                    ...params
+                }
             })
             .then((json)=>{
 
@@ -166,14 +175,17 @@ class EditableTable extends React.Component {
                         item[k].editable = false;
                         item[k].value = t;
                     }
-                    item.key = index;
+                    item.key = item.id.value;
                 })
 
-                this.setState({
-                    data: dataArr,
-                    pagination,
-                });
-            })
+            this.setState({
+                data: dataArr,
+                pagination,
+                expenseSum: json.data.expenseSum,
+                increaseSum: json.data.increaseSum,
+                ARPUSum: json.data.ARPUSum
+            });
+        })
     }
     componentDidMount() {
         this.getData();
@@ -183,7 +195,8 @@ class EditableTable extends React.Component {
         if (typeof editable === 'undefined') {
             return text;
         }
-        return (<EditableCell
+        return(
+            <EditableCell
             editable={editable}
             value={text}
             onChange={value => this.handleChange(key, index, value)}
@@ -218,10 +231,34 @@ class EditableTable extends React.Component {
                     delete data[index][item].status;
                 }
             });
+            this.postModifyData(index);
         });
     }
+
+    postModifyData = (index) =>{
+        var cur = this.state.data[index],
+            obj = {},
+            url = this.props.postUrl;
+
+        Object.keys(cur).forEach((item) => {
+            obj[item] = cur[item].value;
+        })
+        axios.post(url, qs.stringify(obj))
+            .then((json) => {
+                json = json.data;
+                if ( json.success ) {
+                    alert('修改数据成功');
+                } else {
+                    alert('修改数据失败,请重试');
+                }
+                location.reload();
+            }).
+            catch((err) => {
+                alert('渠道修改失败!')
+            })
+    }
     search = (dataObj) => {
-        console.log(dataObj);
+
         this.getData(dataObj)
     }
     render() {
@@ -236,18 +273,20 @@ class EditableTable extends React.Component {
         const columns = this.columns;
 
         return (
-               <div>
-                   <Search isData = "true"  searchData={this.search}></Search>
-                   <br/>
-                   <Table
-                       bordered
-                       dataSource={dataSource}
-                       columns={columns}
-                       pagination = {this.state.pagination}
-                       onChange = {this.handleTableChange}
-                   />;
-               </div>
-            )
+            <div>
+                <h3>总金额:{this.state.expenseSum}, 总数量: {this.state.increaseSum}, ARPU: {this.state.ARPUSum}</h3>
+                <br/>
+                <Search isData = {this.props.history}  searchData={this.search}></Search>
+                <br/>
+                <Table
+                    bordered
+                    dataSource={dataSource}
+                    columns={columns}
+                    pagination = {this.state.pagination}
+                    onChange = {this.handleTableChange}
+                    />
+            </div>
+        )
 
     }
 }

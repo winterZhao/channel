@@ -13,7 +13,7 @@ setInterval(function() {
 
 setInterval(function() {
     co(crawlHistory());
-}, 86400000);
+}, 3600000);
 
 
 

@@ -28,6 +28,7 @@ class WriteNotify extends React.Component {
             })
     }
     render() {
+
         return (
             <div>
                 <textarea name="" id="notify" cols="80" rows="10" name="data"></textarea>

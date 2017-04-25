@@ -2,8 +2,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ChannelComp from '../components/channel-container.jsx';
-import { channelStore } from '../store/index.jsx';
+import ChannelComp from './channel-container.jsx';
+import { channelStore, userStore } from '../store/index.jsx';
 
 var rootEle = document.querySelector('#root');
 var render = function() {
@@ -15,4 +15,5 @@ var render = function() {
 
 render();
 channelStore.subscribe(render);
+userStore.subscribe(render);
 

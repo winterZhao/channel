@@ -1,5 +1,6 @@
 
 import React from 'react';
+import axios from 'axios';
 import { Layout, Menu, Icon, Row, Col } from 'antd';
 import { channelStore, masterStore } from '../store/index.jsx';
 
@@ -55,8 +56,23 @@ class LeftSide extends React.Component {
         } else if ( name === '增加用户' ) {
             channelStore.dispatch({type:'channel',num:''});
             masterStore.dispatch({type: 'master', num: 7});
+        } else if ( name === '退出' ) {
+            this.signout();
         }
 
+    }
+    signout() {
+
+        axios
+            .get('/signout')
+            .then((json) => {
+                json = json.data;
+                if ( json.success ) {
+                    channelStore.dispatch({type:'channel',num:''});
+                    masterStore.dispatch({type: 'master', num: ''});
+                    location.href = '/login';
+                }
+            })
     }
     getAncestorKeys = (key) => {
         const map = {
@@ -87,11 +103,11 @@ class LeftSide extends React.Component {
         master = this.props.master == 'true' ? true : false;
 
         if ( master ) {
-            writeNotifyMenu = <Menu.Item key="112"><span onClick={this.bindClick}>写通知</span></Menu.Item>
-            getIpsMenu =  <Menu.Item key="123"><span  onClick={this.bindClick}>ip列表</span></Menu.Item>
-            systemMenu = <SubMenu key="13" title={<span className="nav-text"><Icon type="api" />系统</span>}>
-                <Menu.Item key="131"><span onClick={this.bindClick}>用户列表</span></Menu.Item>
-                <Menu.Item key="132"><span onClick={this.bindClick}>增加用户</span></Menu.Item>
+            writeNotifyMenu = <Menu.Item key="112"><span style={{display:"block",width:"100%"}} onClick={this.bindClick}>写通知</span></Menu.Item>
+            getIpsMenu =  <Menu.Item key="123"><span style={{display:"block",width:"100%"}} onClick={this.bindClick}>ip列表</span></Menu.Item>
+            systemMenu = <SubMenu key="13" title={<span className="nav-text"><Icon type="api" />用户</span>}>
+                <Menu.Item key="131"><span style={{display:"block",width:"100%"}} onClick={this.bindClick}>用户列表</span></Menu.Item>
+                <Menu.Item key="132"><span style={{display:"block",width:"100%"}} onClick={this.bindClick}>增加用户</span></Menu.Item>
             </SubMenu>
         }
 
@@ -109,17 +125,17 @@ class LeftSide extends React.Component {
                     <img src="../images/admin.png" alt="" style={{display: "block",margin: "0 auto",maxWidth:"70px"}}></img>
                 </div>
                 <SubMenu key="11" title={<span className="nav-text"><Icon type="home" />主页</span>}>
-                    <Menu.Item key="111"><span onClick={this.bindClick}>消息通知</span></Menu.Item>
+                    <Menu.Item key="111"><span style={{display:"block",width:"100%"}} onClick={this.bindClick}>消息通知</span></Menu.Item>
                     {writeNotifyMenu}
                 </SubMenu>
                 <SubMenu key="12" title={<span className="nav-text"><Icon type="area-chart" />渠道数据</span>}>
-                    <Menu.Item key="121"><span onClick={this.bindClick}>实时数据</span></Menu.Item>
-                    <Menu.Item key="122"><span onClick={this.bindClick}>历史数据</span></Menu.Item>
+                    <Menu.Item key="121"><span style={{display:"block",width:"100%"}} onClick={this.bindClick}>实时数据</span></Menu.Item>
+                    <Menu.Item key="122"><span style={{display:"block",width:"100%"}} onClick={this.bindClick}>历史数据</span></Menu.Item>
                     {getIpsMenu}
                 </SubMenu>
                 {systemMenu}
-                <SubMenu key="14" title={<span className="nav-text"><Icon type="user" />退出</span>}>
-                    <Menu.Item key="141"><a href='/login'>退出</a></Menu.Item>
+                <SubMenu key="14" title={<span className="nav-text"><Icon type="user" />系统</span>}>
+                    <Menu.Item key="141"><span style={{display:"block",width:"100%"}} onClick={this.bindClick}>退出</span></Menu.Item>
                 </SubMenu>
             </Menu>
         )

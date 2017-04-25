@@ -23,11 +23,14 @@ class SearchForm extends React.Component {
         }
 
         this.props.form.validateFields((err, values) => {
-            obj.search_name = values.search_name;
+            if ( values.search_name ) {
+                obj.search_name = values.search_name;
+            }
         });
         callback(obj)
     }
     onDateSelect(data, dataString) {
+
         this.setState({
             starttime: dataString[0],
             endtime: dataString[1]
@@ -44,7 +47,7 @@ class SearchForm extends React.Component {
         };
 
         var isData = this.props.isData == 'true' ?  true : false;
-
+        var isName = this.props.isName == 'false'? false : true;
         const children = [];
         if ( isData ) {
             children.push(
@@ -53,22 +56,26 @@ class SearchForm extends React.Component {
                         {...formItemLayout}
                             label="时间范围"
                         >
-                        <RangePicker onChange={this.onDateSelect} />
+                        <RangePicker onChange={this.onDateSelect.bind(this)} />
 
                     </FormItem>
                 </Col>
             );
         }
-        children.push(
-            <Col span={7} key={2}>
-                <FormItem {...formItemLayout} label={`搜索名`}>
-                    {getFieldDecorator('search_name')(
-                        <Input placeholder="请输入搜索名"/>
-                    )}
 
-                </FormItem>
-            </Col>
-        )
+        if ( isName ) {
+            children.push(
+                <Col span={7} key={2}>
+                    <FormItem {...formItemLayout} label={`搜索名`}>
+                        {getFieldDecorator('search_name')(
+                            <Input placeholder="请输入搜索名"/>
+                        )}
+
+                    </FormItem>
+                </Col>
+            )
+        }
+
         children.push(
             <Col span={3} key={3}>
                 <Button type="primary" htmlType="button" onClick={this.handleSearch.bind(this, this.props.searchData)}>搜索</Button>

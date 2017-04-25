@@ -37,6 +37,7 @@ module.exports = function (app) {
     router.post('/master/newchannel', masterRouter.postNewUser);
     // 管理员搜索渠道的个人信息;
     router.get('/master/search/channel', masterRouter.seachChannel);
+    // 管理员获取全部渠道信息;
     router.get('/master/channel/list', masterRouter.getChannelList);
 
     // 渠道商获取内容

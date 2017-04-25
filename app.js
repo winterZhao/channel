@@ -51,7 +51,7 @@ app.use(View(__dirname + '/views', {
 
 Route(app);
 
-//fork('./middleware/crawl.js');
+ fork('./middleware/crawl.js');
 
 app.listen(2000, function() {
     console.log('ok');

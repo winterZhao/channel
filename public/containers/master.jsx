@@ -2,8 +2,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MasterComp from '../components/master-container.jsx';
-import { masterStore } from '../store/index.jsx';
+import MasterComp from './master-container.jsx';
+import { masterStore, userStore } from '../store/index.jsx';
 
 var rootEle = document.querySelector('#root');
 var render = function() {
@@ -15,4 +15,5 @@ var render = function() {
 
 render();
 masterStore.subscribe(render);
+userStore.subscribe(render);
 

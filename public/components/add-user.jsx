@@ -115,7 +115,7 @@ class AddUserForm extends React.Component {
                       )}
                     hasFeedback
                     >
-                    {getFieldDecorator('searchname', {
+                    {getFieldDecorator('search_name', {
                         rules: [{ required: true, message: '请输入搜索名'}],
                     })(
                         <Input />
@@ -149,7 +149,7 @@ class AddUserForm extends React.Component {
                       )}
                     hasFeedback
                     >
-                    {getFieldDecorator('modify_increase', {
+                    {getFieldDecorator('increase_decrement', {
                         rules: [{
                             required: true, message: '请输入数量减量',
                         }, {
@@ -171,7 +171,7 @@ class AddUserForm extends React.Component {
                       )}
                     hasFeedback
                     >
-                    {getFieldDecorator('modify_expense', {
+                    {getFieldDecorator('expense_decrement', {
                         rules: [{
                             required: true, message: '请输入金额减量',
                         }, {

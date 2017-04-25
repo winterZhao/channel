@@ -2,27 +2,37 @@
 import React from 'react';
 import axios from 'axios';
 import { Table, Button } from 'antd';
-
-const columns = [{
-    title: '新增',
-    dataIndex: 'increase',
-    width: '33%'
-}, {
-    title: '付费',
-    dataIndex: 'expense',
-    width: '33%'
-}, {
-    title: 'ARPU',
-    dataIndex: 'arpu',
-    width: '34%'
-}];
+import Search from './search.jsx';
 
 class ShowTable extends React.Component {
     constructor(props) {
         super(props);
+
+        this.columns = [{
+            title: '数量',
+            dataIndex: 'increase'
+        }, {
+            title: '金额',
+            dataIndex: 'expense'
+        }, {
+            title: 'ARPU',
+            dataIndex: 'arpu'
+        }];
+
         this.state = {
             data: [],
-            pagination: {}
+            pagination: {},
+            expenseSum: null,
+            increaseSum: null,
+            ARPUSum: null
+        }
+    }
+    componentWillMount() {
+        if ( this.props.hasSearch ) {
+            this.columns.unshift({
+                title: 'crawl_time',
+                dataIndex: 'crawl_time'
+            })
         }
     }
     handleTableChange = ( pagination, sorter ) => {
@@ -47,8 +57,10 @@ class ShowTable extends React.Component {
 
         axios
             .get(url, {
-                results: 10,
-                ...params
+                params: {
+                    results: 10,
+                    ...params
+                }
             })
             .then((json)=>{
                 const pagination = { ...this.state.pagination };
@@ -59,6 +71,7 @@ class ShowTable extends React.Component {
                     var cur = json.data.dataList[i];
                     var obj = {};
                     obj.increase = cur.modify_increase;
+                    obj.crawl_time = cur.crawl_time;
                     obj.expense = cur.modify_expense;
                     obj.arpu = cur.modify_ARPU;
                     obj.key = i;
@@ -67,21 +80,39 @@ class ShowTable extends React.Component {
                 this.setState({
                     data: dataArr,
                     pagination,
+                    expenseSum: json.data.expenseSum,
+                    increaseSum: json.data.increaseSum,
+                    ARPUSum: json.data.ARPUSum
                 });
             })
     }
     componentDidMount() {
         this.getData();
     }
+    search =(dataObj) => {
+        this.getData(dataObj)
+    }
     render() {
+        var hasSearch = this.props.hasSearch == 'true' ? true : false;
+        var search;
+
+        if ( hasSearch ) {
+            search = <Search isData="true" isName="false" searchData={this.search}></Search>;
+        }
         return (
-            <Table
-                columns={columns}
-                dataSource={this.state.data}
-                bordered
-                pagination = {this.state.pagination}
-                onChange = {this.handleTableChange}
-            />
+            <div>
+                <h3>总金额:{this.state.expenseSum}, 总数量: {this.state.increaseSum}, ARPU: {this.state.ARPUSum}</h3>
+                <br/>
+                {search}
+                <br/>
+                <Table
+                    columns={this.columns}
+                    dataSource={this.state.data}
+                    bordered
+                    pagination = {this.state.pagination}
+                    onChange = {this.handleTableChange}
+                    />
+            </div>
         );
     }
 }

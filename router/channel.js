@@ -41,15 +41,13 @@ const channelRouter = {
         var requestData, result, json = {}, options = {}, opt = {};
 
         requestData = this.request.query;
-        options.limit = Number(requestData.limit) || 10;
-        options.offset = Number(requestData.offset) || 0;
         options.order = 'gmt_modified DESC';
 
         options.where = {};
         opt.where = {};
 
-        options.where.search_name = requestData.search_name || this.session.username;
-        opt.where.search_name = requestData.search_name || this.session.username;
+        options.where.search_name = this.session.username;
+        opt.where.search_name = this.session.username;
 
         if ( requestData.starttime && requestData.endtime ) {
             options.where.crawl_time = {

@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 544:
+/***/ 559:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10,21 +10,21 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _css = __webpack_require__(181);
+var _css = __webpack_require__(94);
 
-var _row = __webpack_require__(84);
+var _row = __webpack_require__(63);
 
 var _row2 = _interopRequireDefault(_row);
 
-var _css2 = __webpack_require__(172);
+var _css2 = __webpack_require__(91);
 
-var _col = __webpack_require__(80);
+var _col = __webpack_require__(62);
 
 var _col2 = _interopRequireDefault(_col);
 
-var _css3 = __webpack_require__(176);
+var _css3 = __webpack_require__(191);
 
-var _layout = __webpack_require__(116);
+var _layout = __webpack_require__(128);
 
 var _layout2 = _interopRequireDefault(_layout);
 
@@ -34,11 +34,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _login = __webpack_require__(560);
+var _login = __webpack_require__(579);
 
 var _login2 = _interopRequireDefault(_login);
 
-__webpack_require__(567);
+__webpack_require__(586);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -89,10 +89,10 @@ exports.default = LoginComp;
 
 /***/ }),
 
-/***/ 547:
+/***/ 563:
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(20)(undefined);
+exports = module.exports = __webpack_require__(17)(undefined);
 // imports
 
 
@@ -104,16 +104,16 @@ exports.push([module.i, "@font-face {\n  font-family: \"Helvetica Neue For Numbe
 
 /***/ }),
 
-/***/ 554:
+/***/ 571:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(547);
+var content = __webpack_require__(563);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(19)(content, {});
+var update = __webpack_require__(16)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -131,7 +131,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 560:
+/***/ 579:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -141,27 +141,27 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _css = __webpack_require__(170);
+var _css = __webpack_require__(49);
 
-var _button = __webpack_require__(56);
+var _button = __webpack_require__(32);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _css2 = __webpack_require__(82);
+var _css2 = __webpack_require__(28);
 
-var _input = __webpack_require__(81);
+var _input = __webpack_require__(38);
 
 var _input2 = _interopRequireDefault(_input);
 
-var _css3 = __webpack_require__(175);
+var _css3 = __webpack_require__(127);
 
-var _icon = __webpack_require__(15);
+var _icon = __webpack_require__(18);
 
 var _icon2 = _interopRequireDefault(_icon);
 
-var _css4 = __webpack_require__(597);
+var _css4 = __webpack_require__(92);
 
-var _form = __webpack_require__(295);
+var _form = __webpack_require__(80);
 
 var _form2 = _interopRequireDefault(_form);
 
@@ -266,7 +266,7 @@ exports.default = WrappedNormalLoginForm;
 
 /***/ }),
 
-/***/ 562:
+/***/ 581:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -280,13 +280,11 @@ var _reactDom = __webpack_require__(11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _loginContainer = __webpack_require__(544);
+var _loginContainer = __webpack_require__(559);
 
 var _loginContainer2 = _interopRequireDefault(_loginContainer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//import LoginComp from '../components/login.jsx';
 
 var rootEle = document.querySelector('#root');
 
@@ -294,17 +292,17 @@ _reactDom2.default.render(_react2.default.createElement(_loginContainer2.default
 
 /***/ }),
 
-/***/ 567:
+/***/ 586:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(16);
+__webpack_require__(15);
 
-__webpack_require__(554);
+__webpack_require__(571);
 
 /***/ })
 
-},[562]);
+},[581]);
 //# sourceMappingURL=login.js.map

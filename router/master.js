@@ -14,7 +14,7 @@ const masterRouter = {
 
         this.session.status = this.session.status || 'channel';
         if (this.session.status === 'master') {
-            yield this.render('master.html')
+            yield this.render('master.html');
         } else {
             this.redirect('/login');
         }
@@ -41,9 +41,6 @@ const masterRouter = {
         }
 
         data.password = encryption.encrypt( data.password );
-        data.search_name = data.searchname;
-        data.increase_decrement = data.modify_increase;
-        data.expense_decrement = data.modify_expense;
 
         if ( json.success ) {
 
@@ -63,15 +60,17 @@ const masterRouter = {
     },
     // 获取渠道列表:
     *getChannelList() {
-        var result, json = {};
+        var result, json = {}, options = {};
+        options.order = 'gmt_modified DESC';
+
         try {
-            result = yield userService.findAndCountAll();
+            result = yield userService.findAndCountAll(options);
             json.success = true;
             json.count = result.count;
             json.dataList = result.rows;
             json.dataList.forEach(function(item) {
                 item.password = encryption.decrypt(item.password);
-            })
+            });
         } catch ( e ) {
             throw e;
             json.success = false;
@@ -83,17 +82,7 @@ const masterRouter = {
 
         var requestData, result, json = {}, options = {};
         requestData = this.request.query;
-        options.limit = Number(requestData.limit) || 10;
-        options.offset = Number(requestData.offset) || 0;
         options.order = 'gmt_modified DESC';
-        options.where = {};
-
-        if ( requestData.starttime && requestData.endtime ) {
-            options.where.gmt_create = {
-                $lt: new Date(requestData.endtime + ' 00:00:00'),
-                $gt: new Date(requestData.starttime + ' 00:00:00')
-            };
-        }
 
         try {
             result = yield ipService.findAndCountAll(options);
@@ -117,15 +106,18 @@ const masterRouter = {
     },
     // 搜索某个渠道的用户信息
     *seachChannel() {
-        var searchName, result, json = {};
+        var searchName, result, json = {}, arr = [];
 
-        searchName = this.request.query.name;
-        result = yield userService.findOne({
-            username: searchName
+        searchName = this.request.query.search_name;
+        result = yield userService.findAll({
+            search_name: searchName
         });
 
         if (result) {
-            result.password = encryption.decrypt(result.password );
+            result.forEach(function(item) {
+                item.password = encryption.decrypt(item.password );
+            });
+
             json.success = true;
             json.dataList = result;
         } else {
@@ -136,13 +128,18 @@ const masterRouter = {
     // 得到全部的当前数据信息;
     *getCurrentData() {
         var result, json = {};
+        var search_name = this.request.query.search_name;
+        var obj = {};
+        if ( search_name ) {
+            obj.search_name = search_name;
+        }
         try {
-            result = yield currentService.findAndCountAll({});
-            json.increaseSum = yield currentService.sum('increase');
-            json.expenseSum = yield currentService.sum('expense');
-            json.ARPUSum = (json.expenseSum / json.increaseSum).toFixed(2);
+            result = yield currentService.findAndCountAll(obj);
+            json.increaseSum = yield currentService.sum('increase') || 0;
+            json.expenseSum = yield currentService.sum('expense') || 0;
+            json.ARPUSum = (json.expenseSum / json.increaseSum).toFixed(2) || 0;
             json.success = true;
-            json.count = result.count;
+            json.length = result.count;
             json.dataList = result.rows;
         } catch(e) {
             throw e;
@@ -155,8 +152,6 @@ const masterRouter = {
         var requestData, result, json = {}, options = {}, opt = {};
 
         requestData = this.request.query;
-        options.limit = Number(requestData.limit) || 10;
-        options.offset = Number(requestData.offset) || 0;
         options.order = 'gmt_modified DESC';
         options.where = {};
         opt.where = {};
@@ -178,7 +173,6 @@ const masterRouter = {
 
         try {
             result = yield historyService.findAndCountAll(options);
-
             if ( opt.where.search_name || opt.where.crawl_time ) {
                 json.increaseSum = yield historyService.sum('modify_increase', opt);
                 json.expenseSum = yield historyService.sum('modify_expense', opt);
@@ -210,7 +204,7 @@ const masterRouter = {
         data = this.request.body;
         options.modify_increase = data.modify_increase;
         options.modify_expense = data.modify_expense;
-        options.modify_ARPU = data.modify_ARPU;
+        options.modify_ARPU = (data.modify_expense / data.modify_increase).toFixed(2);
         options.gmt_modified = new Date();
 
         try {

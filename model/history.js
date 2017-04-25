@@ -37,12 +37,12 @@ var historyModel = sequelize.define('history', {
         allowNull: false
     },
     modify_expense: {
-        type: Sequelize.FLOAT(10, 4),
+        type: Sequelize.FLOAT(10, 2),
         comment: '付费修改项',
         allowNull: false
     },
     modify_ARPU: {
-        type: Sequelize.FLOAT(10, 4),
+        type: Sequelize.FLOAT(10, 2),
         comment: '修改后的ARPU',
         allowNull: false
     },
