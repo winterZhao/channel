@@ -1,0 +1,38 @@
+<div class="panel-body">
+    <div class="adv-table">
+        <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline" role="grid">
+            <table class="display table table-bordered table-striped dataTable" id="dynamic-table" aria-describedby="dynamic-table_info">
+                <thead>
+                <tr role="row">
+                    <th class=" text-center sorting_desc" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-sort="descending" aria-label="新增: activate to sort column ascending" style="width: 137px;">次序</th>
+                    <th class=" text-center sorting_desc" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-sort="descending" aria-label="新增: activate to sort column ascending" style="width: 137px;">用户名</th>
+                    <th class=" text-center sorting_desc" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-sort="descending" aria-label="新增: activate to sort column ascending" style="width: 137px;">密码</th>
+                    <th class="text-center sorting_desc" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-sort="descending" aria-label="新增: activate to sort column ascending" style="width: 137px;">级别</th>
+                    <th class="text-center sorting_desc" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-sort="descending" aria-label="新增: activate to sort column ascending" style="width: 137px;">新增减量</th>
+                    <th class="text-center sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="付费(元): activate to sort column ascending" style="width: 216px;">付费减量</th>
+                    <th class="text-center sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="ARPU(元): activate to sort column ascending" style="width: 249px;">搜索名</th>
+                    <th class="text-center sorting" role="columnheader" tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" aria-label="ARPU(元): activate to sort column ascending" style="width: 249px;">爬虫来源</th>
+                </tr>
+                </thead>
+                <tbody id="my_tbody" role="alert" aria-live="polite" aria-relevant="all">
+                {{#dataList}}
+                    <tr class="gradeA odd">
+                        <td class="text-center">{{id}}</td>
+                        <td class="text-center">{{username}}</td>
+                        <td class="text-center">{{password}}</td>
+                        <td class="text-center">{{rank}}</td>
+                        <td class="text-center ">{{increase_decrement}}</td>
+                        <td class=" text-center">{{expense_decrement}}</td>
+                        <td class=" text-center">{{search_name}}</td>
+                        <td class=" text-center">{{crawl_url}}</td>
+                    </tr>
+                {{/dataList}}
+                </tbody>
+            </table>
+            <smaller>
+                注:<br/>
+                1.<mark>级别</mark>:1代表管理员,2代表渠道商; <mark>爬虫来源</mark>:1代表geek-maker,2代表batpk';<br/>
+                2.一次只能改一条;</smaller>
+        </div>
+    </div>
+</div>

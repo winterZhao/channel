@@ -1,0 +1,17 @@
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li>
+            <a href="javascript:;" data-role="previous" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {{#count}}
+            <li data-role="page"><a  href="javascript:;"  data-page="{{this-1}}">{{this}}</a></li>
+        {{/count}}
+        <li>
+            <a href="javascript:;" data-role="next" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

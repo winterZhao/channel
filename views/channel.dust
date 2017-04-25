@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title></title>
+    <title></title>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/bootstrap-datetimepicker.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="lib/html5shiv.js"></script>
+    <script src="lib/respond.js"></script>
+    <![endif]-->
+</head>
+<body class="sticky-header" style="">
+<main>
+
+    <!-- left side start-->
+    <div class="left-side sticky-left-side" tabindex="5000" style="overflow: hidden; outline: none;">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <a href="javascript:;"><img src="images/logo.png" alt=""></a>
+        </div>
+
+        <div class="logo-icon text-center">
+            <a href="javascript:;"><img src="images/logo_icon.png" alt=""></a>
+        </div>
+        <!--logo and iconic logo end-->
+
+
+        <div class="left-side-inner">
+
+            <!-- visible to small devices only -->
+            <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                <div class="media logged-user">
+                    <img alt="" src="images/user-avatar.png" class="media-object">
+                    <div class="media-body pdl5">
+                        <h4>
+                            <a href="javascript:;">{username} </a>
+                        </h4>
+                        <span>"Hello..."</span>
+                    </div>
+                </div>
+
+                <h5 class="left-nav-title">账户信息</h5>
+
+            </div>
+
+
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li class="menu-list">
+                    <a href="javascript:;">
+                        <i class="glyphicon glyphicon-home"></i>
+                        <span class="pdl5">主页</span>
+                    </a>
+                    <ul class="sub-menu-list" style="display: none;">
+                        <li class="active">
+                            <a href="javascript:;" id="notify">
+                                消息通知
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-list">
+                    <a href="#a">
+                        <i class="glyphicon glyphicon-stats"></i>
+                        <span class="pdl5">渠道数据</span>
+                    </a>
+                    <ul class="sub-menu-list">
+                        <li>
+                            <a href="#" id="current-data">
+                                实时数据
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="history-data">
+                                历史数据</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li>
+                <a href="javascript:;" id="sign-out">
+                <i class="glyphicon glyphicon-log-out"></i>
+                    <span class="pdl5">退出</span>
+                </a>
+            </li>
+            </ul>
+        </div>
+    </div>
+    <!-- left side end-->
+
+    <div class="main-content" style="height: 1050px;">
+        <!--toggle button start-->
+        <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+        <!--toggle button end-->
+
+        <!-- header section start-->
+        <div class="header-section">
+            <!--toggle button start-->
+            <a class="toggle-btn"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
+            <!--toggle button end-->
+            <!--notification menu start -->
+
+            <div class="dropdown menu-right">
+                <ul class="notification-menu">
+                    <li><a href="javascript:;" class="btn btn-default dropdown-toggle" data-toggle="dropdown"> <img src="images/user-avatar.png" alt="">
+                        {username}  <span class="caret"></span>
+                    </a>
+                        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                            <li><a href="javascript:;" id ='sign-out'><i class="fa fa-sign-out"></i>
+                                退出</a></li>
+                        </ul></li>
+
+                </ul>
+            </div>
+            <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+
+        <!-- page heading start-->
+        <div class="page-heading" id="header">
+
+        </div>
+        <!-- page heading end-->
+
+        <section class="container-fluid" >
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel jumbotron" id="content" data-username='{username}'>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--footer section start-->
+        <section class="container-fluid" >
+            <div class="row">
+                <div class="col-lg-12">
+                    <footer>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                2016 © CopyRight Reserved
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!--footer section end-->
+    </div>
+    <!-- main content end--> </main>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+
+<script src="lib/jquery.js"></script>
+
+
+
+
+<!--common scripts for all pages-->
+<div id="ascrail2000" class="nicescroll-rails" style="width: 6px; z-index: 1000; background: rgb(66, 79, 99); cursor: default; position: fixed; top: 0px; height: 100%; right: 0px; opacity: 0;">
+    <div style="position: relative; top: 0px; float: right; width: 6px; height: 381px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div>
+</div>
+<div id="ascrail2000-hr" class="nicescroll-rails" style="height: 6px; z-index: 1000; background: rgb(66, 79, 99); position: fixed; left: 0px; width: 100%; bottom: 0px; cursor: default; display: none; opacity: 0;">
+    <div style="position: relative; top: 0px; height: 6px; width: 1296px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div>
+</div>
+<div id="ascrail2001" class="nicescroll-rails" style="width: 3px; z-index: 100; background: rgb(66, 79, 99); cursor: default; position: fixed; top: 0px; left: 237px; height: 617px; display: none; opacity: 0;">
+    <div style="position: relative; top: 0px; float: right; width: 3px; height: 0px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div></div>
+<div id="ascrail2001-hr" class="nicescroll-rails" style="height: 3px; z-index: 100; background: rgb(66, 79, 99); top: 614px; left: 0px; position: fixed; cursor: default; display: none; opacity: 0;"><div style="position: relative; top: 0px; height: 3px; width: 0px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px; left: 0px;"></div></div>
+
+<script src="build/channel.js"></script>
+
+</body>
+</html>

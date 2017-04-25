@@ -1,0 +1,94 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="username" class="col-sm-2 control-label">用户名</label>
+        <div class="col-sm-3">
+            {{#if username}}
+                <input type="text" value="{{username}}" class="form-control" id="username" placeholder="请输入渠道名">
+            {{else}}
+                <input type="text" class="form-control" id="username" placeholder="请输入渠道名">
+            {{/if}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="password" class="col-sm-2 control-label">密码</label>
+        <div class="col-sm-3">
+            {{#if password}}
+                <input type="text" value="{{password}}" class="form-control" id="password" placeholder="请输入密码">
+            {{else}}
+                <input type="text" class="form-control" id="password" placeholder="请输入密码">
+            {{/if}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="rank" class="col-sm-2 control-label">用户类型</label>
+        <div class="col-sm-3">
+            {{#if rank}}
+                <select class="form-control" name="" id="rank" value="{{rank}}" disabled>
+                    <option selected>渠道商</option>
+                    <option >管理员</option>
+                </select>
+            {{else}}
+                <select class="form-control" name="" id="rank">
+                    <option selected>渠道商</option>
+                    <option >管理员</option>
+                </select>
+            {{/if}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="increase" class="col-sm-2 control-label">新增扣量</label>
+        <div class="col-sm-3">
+            {{#if increase_decrement}}
+            <input type="text" value="{{increase_decrement}}" placeholder="小数,保留两位" id="increase"  class="form-control">
+            {{else}}
+                <input type="text" id="increase"  class="form-control" placeholder="小数,保留两位">
+            {{/if}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="expense" class="col-sm-2 control-label">金额扣量</label>
+        <div class="col-sm-3">
+            {{#if expense_decrement}}
+                <input type="text" value="{{expense_decrement}}" placeholder="小数,保留两位" id="expense"  class="form-control">
+            {{else}}
+                <input type="text" id="expense"  class="form-control" placeholder="小数,保留两位">
+            {{/if}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="searchname" class="col-sm-2 control-label">搜索名</label>
+        <div class="col-sm-3">
+            {{#if search_name}}
+                <input type="text" value="{{search_name}}" id="searchname"  class="form-control">
+            {{else}}
+                <input type="text" id="searchname"  class="form-control" />
+            {{/if}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="crawl-url" class="col-sm-2 control-label">爬虫来源</label>
+        <div class="col-sm-3">
+            {{#if rank}}
+                <select class="form-control" name="" id="crawl-url" value="{{crawl_url}}">
+                    <option selected>geek-maker</option>
+                    <option >batpk</option>
+                </select>
+            {{else}}
+                <select class="form-control" name="" id="crawl-url">
+                    <option selected>geek-maker</option>
+                    <option >batpk</option>
+                </select>
+            {{/if}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            {{#if username}}
+                <input type="button" value="修改" class="btn btn-default" id="add-new-channel"/>
+            {{else}}
+                <input type="button" value="增加" data-new="true" class="btn btn-default" id="add-new-channel"/>
+            {{/if}}
+
+        </div>
+    </div>
+</form>
