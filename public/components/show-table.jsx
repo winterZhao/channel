@@ -30,7 +30,7 @@ class ShowTable extends React.Component {
     componentWillMount() {
         if ( this.props.hasSearch ) {
             this.columns.unshift({
-                title: 'crawl_time',
+                title: '时间',
                 dataIndex: 'crawl_time'
             })
         }

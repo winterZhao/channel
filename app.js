@@ -9,8 +9,9 @@ const Logger = require('koa-logger');
 const Static = require('koa-static');
 const StaticCache = require('koa-static-cache');
 const session = require('koa-session');
-const fork = require('child_process').fork;
+const compress = require('koa-compress');
 
+const fork = require('child_process').fork;
 const getClientIP = require('./middleware/getClientIP');
 
 app.use(Logger());
@@ -25,23 +26,22 @@ var config = {
 };
 app.use(session(config, app));
 
-// 访问当前页时爬取实时数据
-
+app.use(compress())
 // 将渠道商ip存入数据库;
 app.use(getClientIP);
 
 // 不需要缓存
-app.use(Static(path.resolve(__filename, '../public'), {
-    maxage: 24 * 60 * 60
-}));
+//app.use(Static(path.resolve(__filename, '../public'), {
+//    maxage: 24 * 60 * 60
+//}));
 
 
 
 
 // 需要缓存
-// app.use(StaticCache(path.resolve(__dirname, 'public'), {
-//    maxAge: 24 * 60 * 60
-// }));
+ app.use(StaticCache(path.resolve(__dirname, 'public'), {
+    maxAge: 24 * 60 * 60
+ }));
 
 
 app.use(View(__dirname + '/views', {

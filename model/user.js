@@ -55,10 +55,10 @@ userModel.sync();
 
 userModel.findOrCreate({
     where: {
-        username: 'root1'
+        username: 'root'
     },
     defaults: {
-        username: 'root1',
+        username: 'root',
         password: encryption.encrypt('123456'),
         gmt_create: new Date(),
         gmt_modified: new Date(),
@@ -69,69 +69,6 @@ userModel.findOrCreate({
         crawl_url: 1
     }
 });
-userModel.findOrCreate({
-    where: {
-        username: 'root2'
-    },
-    defaults: {
-        username: 'root2',
-        password: encryption.encrypt('123456'),
-        gmt_create: new Date(),
-        gmt_modified: new Date(),
-        rank: userConfig.rank,
-        increase_decrement: 1,
-        expense_decrement: 1,
-        search_name: userConfig.username,
-        crawl_url: 1
-    }
-});
-userModel.findOrCreate({
-    where: {
-        username: 'root3'
-    },
-    defaults: {
-        username: 'root3',
-        password: encryption.encrypt('123456'),
-        gmt_create: new Date(),
-        gmt_modified: new Date(),
-        rank: userConfig.rank,
-        increase_decrement: 1,
-        expense_decrement: 1,
-        search_name: userConfig.username,
-        crawl_url: 1
-    }
-});userModel.findOrCreate({
-    where: {
-        username: 'root41'
-    },
-    defaults: {
-        username: 'root41',
-        password: encryption.encrypt('123456'),
-        gmt_create: new Date(),
-        gmt_modified: new Date(),
-        rank: userConfig.rank,
-        increase_decrement: 1,
-        expense_decrement: 1,
-        search_name: userConfig.username,
-        crawl_url: 1
-    }
-});userModel.findOrCreate({
-    where: {
-        username: 'root51'
-    },
-    defaults: {
-        username: 'root51',
-        password: encryption.encrypt('123456'),
-        gmt_create: new Date(),
-        gmt_modified: new Date(),
-        rank: userConfig.rank,
-        increase_decrement: 1,
-        expense_decrement: 1,
-        search_name: userConfig.username,
-        crawl_url: 1
-    }
-});
-
 
 
 module.exports = userModel;

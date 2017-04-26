@@ -46,69 +46,30 @@ const crawlCurrent1 = function*( cur ) {
     var loginResult, result, option;
 
     option = optionArr[0];
-    loginResult  = yield thunkRequestPost({
-        url: option.loginUrl,
-        form: {
-            account: cur.username,
-            pwd: cur.password
-        }
-    });
 
-    result = yield thunkRequestPost({
-        url: option.currentUrl,
-        headers: {
-            'cookie': loginResult[0].headers['set-cookie']
-        }
-    });
+    try {
+        loginResult  = yield thunkRequestPost({
+            url: option.loginUrl,
+            form: {
+                account: cur.username,
+                pwd: cur.password
+            }
+        });
 
-    var $ = cheerio.load(result[0].body);
-    $('#my_tbody tr').each(function() {
-        var obj = {};
-        obj.increase = $(this).find('td').eq(0).html();
-        obj.expense = $(this).find('td').eq(1).html();
-        obj.ARPU = $(this).find('td').eq(2).html();
-        obj.username = cur.username;
-        obj.search_name = cur.username;
-        obj.gmt_create = new Date();
-        obj.gmt_modified = new Date();
-        obj.modify_increase = Number(obj.increase) * ( 1 - cur.increase_decrement );
-        obj.modify_expense = Number(obj.expense) * ( 1 - cur.expense_decrement );
-        obj.modify_ARPU = obj.modify_expense / obj.modify_increase;
-        arr.push(obj);
-    });
+        result = yield thunkRequestPost({
+            url: option.currentUrl,
+            headers: {
+                'cookie': loginResult[0].headers['set-cookie']
+            }
+        });
 
-};
-
-const crawlCurrent2 = function*( cur ) {
-    var loginResult, result, option;
-
-    option = optionArr[1];
-    loginResult  = yield thunkRequestPost({
-        url: option.loginUrl,
-        form: {
-            username: cur.username,
-            password: cur.password
-        }
-    });
-
-    result = yield thunkRequestPost({
-        url: option.currentUrl,
-        headers: {
-            'cookie': loginResult[0].headers['set-cookie']
-        }
-    });
-
-    var $ = cheerio.load(result[0].body);
-
-    $('.bdrcontent tr').each(function() {
-        var obj = {};
-        var num = $(this).find('td').eq(3).html();
-        var name = $(this).find('td').eq(2).html();
-        if ( Number(num) && name ) {
-            obj.increase = $(this).find('td').eq(3).html();
-            obj.expense = $(this).find('td').eq(4).html().split(';')[1];
-            obj.ARPU = $(this).find('td').eq(5).html();
-            obj.username = $(this).find('td').eq(1).html();;
+        var $ = cheerio.load(result[0].body);
+        $('#my_tbody tr').each(function() {
+            var obj = {};
+            obj.increase = $(this).find('td').eq(0).html();
+            obj.expense = $(this).find('td').eq(1).html();
+            obj.ARPU = $(this).find('td').eq(2).html();
+            obj.username = cur.username;
             obj.search_name = cur.username;
             obj.gmt_create = new Date();
             obj.gmt_modified = new Date();
@@ -116,9 +77,57 @@ const crawlCurrent2 = function*( cur ) {
             obj.modify_expense = Number(obj.expense) * ( 1 - cur.expense_decrement );
             obj.modify_ARPU = obj.modify_expense / obj.modify_increase;
             arr.push(obj);
-        }
-    });
+        });
+    } catch(e) {
 
+    }
+
+};
+
+const crawlCurrent2 = function*( cur ) {
+    var loginResult, result, option;
+
+    option = optionArr[1];
+
+    try {
+        loginResult  = yield thunkRequestPost({
+            url: option.loginUrl,
+            form: {
+                username: cur.username,
+                password: cur.password
+            }
+        });
+
+        result = yield thunkRequestPost({
+            url: option.currentUrl,
+            headers: {
+                'cookie': loginResult[0].headers['set-cookie']
+            }
+        });
+
+        var $ = cheerio.load(result[0].body);
+
+        $('.bdrcontent tr').each(function() {
+            var obj = {};
+            var num = $(this).find('td').eq(3).html();
+            var name = $(this).find('td').eq(2).html();
+            if ( Number(num) && name ) {
+                obj.increase = $(this).find('td').eq(3).html();
+                obj.expense = $(this).find('td').eq(4).html().split(';')[1];
+                obj.ARPU = $(this).find('td').eq(5).html();
+                obj.username = $(this).find('td').eq(1).html();;
+                obj.search_name = cur.username;
+                obj.gmt_create = new Date();
+                obj.gmt_modified = new Date();
+                obj.modify_increase = Number(obj.increase) * ( 1 - cur.increase_decrement );
+                obj.modify_expense = Number(obj.expense) * ( 1 - cur.expense_decrement );
+                obj.modify_ARPU = obj.modify_expense / obj.modify_increase;
+                arr.push(obj);
+            }
+        });
+    } catch (e) {
+
+    }
 };
 
 const saveToCurrent = function*() {

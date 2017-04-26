@@ -2,6 +2,7 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -34,7 +35,8 @@ module.exports = {
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             filename: 'common.js'
-        })
+        }),
+        new UglifyJSPlugin()
 
     ],
     devtool: 'source-map'
