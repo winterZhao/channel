@@ -1,7 +1,9 @@
-Hello World
+a website which use react and koa1;
 
-[click here](http://channel.zhaoleilei.cn/)
+[website](http://channel.zhaoleilei.cn/)
+
 username: root;
+
 password: 123456;
 
 
